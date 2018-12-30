@@ -6,23 +6,14 @@ import android.os.Bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main2Activity extends AppCompatActivity {
-    private DatabaseReference dbRef;
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Obj o = new Obj("Jason Wang", "jason@gmail.com", 19);
-        Obj o2 = new Obj("Huakun Shen", "shenhuakun@gmail.com", 19);
-        List<Obj> lst = new ArrayList<>();
-        lst.add(o);
-        lst.add(o2);
-        Student student = new Student(001, lst);
-        dbRef = FirebaseDatabase.getInstance().getReference().child("StudentList");
-        dbRef.child(o.getName()).setValue(student);
-
+        User user1 = new User("Huakun", 19);
+        DatabaseReference ref = db.getReference().child("Users");
+        ref.setValue(user1);
     }
 }
