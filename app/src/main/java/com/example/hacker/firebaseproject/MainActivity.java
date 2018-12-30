@@ -21,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -30,22 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button login;
-    private Button signup_Btn;
+    private Button signout_Btn;
+//    private User user;
+//    private Button newActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Message");
-//        databaseReference.setValue("Hello Firebase");
-        databaseReference.setValue("Firebasen");
-
-//        email = findViewById(R.id.emailET);
-//
-//        password = findViewById(R.id.passwordET);
-//        login = findViewById(R.id.loginBtn);
 
         Button newActivity = findViewById(R.id.newActivity);
         newActivity.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
+                                        Toast.makeText(MainActivity.this, "Authentication succeeds.",
+                                                Toast.LENGTH_SHORT).show();
 //                                        updateUI(user);
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -85,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                 }
+            }
+        });
+
+        signout_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // user is signed in
                     Log.d(TAG, "user signed in");
+                    Log.d(TAG, "User name: " + user.getEmail());
                 } else {
                     // user is signed out
                     Log.d(TAG, "user signed out");
@@ -122,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.emailET);
         password = findViewById(R.id.passwordET);
         login = findViewById(R.id.loginBtn);
-        signup_Btn = findViewById(R.id.sign_up_Btn);
+        signout_Btn = findViewById(R.id.sign_out_Btn);
     }
 
     @Override
@@ -140,4 +147,6 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+
 }

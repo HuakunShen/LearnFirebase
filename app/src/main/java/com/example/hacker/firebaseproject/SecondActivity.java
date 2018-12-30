@@ -28,7 +28,7 @@ public class SecondActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.button2);
         tv = findViewById(R.id.text);
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Message");
+        databaseReference = database.getReference("NewMessage");
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +58,9 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+        Obj o = new Obj("Huakun Shen", "shenhuakun@gmail.com", 19);
+//        database.getReference().child("double").child("user3").setValue(o);
+        database.getReference().child("User").child(o.getName()).setValue(o);
 
     }
 }
